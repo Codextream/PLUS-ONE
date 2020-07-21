@@ -1,49 +1,41 @@
-# 3 SUM
+# PLUS ONE
 
-Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
-### Note:
+Given a non-empty array of digits representing a non-negative integer, increment one to the integer.
 
-The solution set must not contain duplicate triplets.
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
 
-### Example:
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+### Example 1:
 <pre>
-Given array nums = [-1, 0, 1, 2, -1, -4],
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+</pre>
 
-A solution set is:
-[
-  [-1, 0, 1],
-  [-1, -1, 2]
-]
+### Example 2:
+<pre>
+Input: [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
 </pre>
 
 ### Solution:
 
 ```cpp
 
-
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        int n = nums.size();
-        vector<vector<int>> ans;
-        for(int i=0;i<n-2;i++){
-               if(i>0 && (nums[i]==nums[i-1]) )continue;
-               int l=i+1, r= n-1;
-               while(l<r){
-                   int sum =nums[i]+nums[l]+nums[r];
-                   if(sum<0) l++;
-                   else if(sum>0)r--;
-                   else {
-                       ans.push_back(vector<int>{nums[i],nums[l],nums[r]});
-                       while(l+1<r && nums[l]==nums[l+1])l++;
-                       while(l<r-1 && nums[r]==nums[r-1]) r--;
-                       l++; r--;
-                   }
-               }
+    vector<int> plusOne(vector<int> &digits) {
+        int c = 1;
+        for (int i = digits.size() - 1; i >= 0; i--) {
+            digits[i] += c;
+            c = digits[i] / 10;
+            digits[i] = digits[i] % 10;
         }
-        return ans;
+        if (c > 0) digits.insert(digits.begin(), c);
+        return digits;
     }
 };
 
